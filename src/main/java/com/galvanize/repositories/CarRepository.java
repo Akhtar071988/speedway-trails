@@ -1,4 +1,4 @@
-package com.galvanize.repository;
+package com.galvanize.repositories;
 
 import com.galvanize.entities.Car;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,12 +1,12 @@
 package com.galvanize.entities;
 
-import javafx.beans.value.ObservableBooleanValue;
-
 import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Table(name = "driver")
-public class Driver{
+@Table(name="drivers")
+public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -15,22 +15,34 @@ public class Driver{
     @Column
     String lastName;
     @Column
-    String nickname;
+    int age;
     @Column
-    Integer age;
+    String nickName;
     @Column
-    Integer win;
+    int carId;
     @Column
-    Integer loss;
+    int win;
+    @Column
+    int loss;
 
     public Driver() {
     }
 
-    public Driver(String firstName, String lastName, String nickname, Integer age){
+    public Driver(String fistName, String lastName, int age, String nickName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.nickname = nickname;
         this.age = age;
+        this.nickName = nickName;
+    }
+
+    public Driver(Long id, String fistName, String lastName, int age, String nickName, int win, int loss) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.nickName = nickName;
+        this.win = win;
+        this.loss = loss;
     }
 
     public Long getId() {
@@ -57,23 +69,31 @@ public class Driver{
         this.lastName = lastName;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public Integer getWin() {
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public int getCar() {
+        return carId;
+    }
+
+    public void setCar(int car) {
+        this.carId = car;
+    }
+
+    public int getWin() {
         return win;
     }
 
@@ -81,11 +101,42 @@ public class Driver{
         this.win = win;
     }
 
-    public Integer getLoss() {
+    public int getLoss() {
         return loss;
     }
 
-    public void setLoss(Integer loss) {
+    public void setLoss(int loss) {
         this.loss = loss;
+    }
+
+    public void update(Driver expected) {
+        if(expected.getId()!=0){this.setId(expected.getId());}
+        if(expected.getAge()!=0){this.setAge(expected.getAge());}
+        if(expected.getCar()!=0){this.setCar(expected.getCar());}
+        if(expected.getWin()!=0){this.setWin(expected.getWin());}
+        if(expected.getLoss()!=0){this.setLoss(expected.getLoss());}
+        if(expected.getFirstName()!=null){this.setFirstName(expected.getFirstName());}
+        if(expected.getLastName()!=null){this.setLastName(expected.getLastName());}
+        if(expected.getNickName()!=null){this.setNickName(expected.getNickName());}
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Driver driver = (Driver) o;
+        return getAge() == driver.getAge() &&
+                carId == driver.carId &&
+                getWin() == driver.getWin() &&
+                getLoss() == driver.getLoss() &&
+                Objects.equals(getId(), driver.getId()) &&
+                Objects.equals(getFirstName(), driver.getFirstName()) &&
+                Objects.equals(getLastName(), driver.getLastName()) &&
+                Objects.equals(getNickName(), driver.getNickName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getAge(), getNickName(), carId, getWin(), getLoss());
     }
 }
